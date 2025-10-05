@@ -2,81 +2,58 @@ from .vehiculo import Vehiculo
 from datetime import datetime
 
 class Auto(Vehiculo):
-    def __init__(self, id_vehiculo, patente, peso_kg, asientos_totales):
+    def __init__(self, id_vehiculo, patente, peso_kg, cantidad_asientos):
         super().__init__(id_vehiculo, patente, peso_kg)
-        if asientos_totales < 1:
-            raise ValueError("Debe tener al menos 1 asiento.")
-        self._asientos_totales = asientos_totales
-        self._ocupantes_actuales = 0
-        self._eventos_ocupacion = []
+        self._cantidad_asientos = cantidad_asientos
+        self._ocupantes = 0
+        self.eventos_ocupacion = []
 
     @property
-    def asientos_totales(self):
-        return self._asientos_totales
+    def ocupantes(self):
+        return self._ocupantes
 
-    @property
-    def ocupantes_actuales(self):
-        return self._ocupantes_actuales
+    def subir_personas(self, cantidad):
+        if cantidad <= 0 or self._ocupantes + cantidad > self._cantidad_asientos:
+            raise ValueError("Cantidad inválida o supera capacidad.")
+        antes = self._ocupantes
+        self._ocupantes += cantidad
+        self._registrar_ocupacion("subida", cantidad, antes, self._ocupantes)
+        self._registrar_evento("ocupantes", antes, self._ocupantes, f"subida de {cantidad}")
 
-    @property
-    def eventos_ocupacion(self):
-        return self._eventos_ocupacion.copy()
-
-    def subir_personas(self, n):
-        if self.estado != 'habilitado':
-            raise ValueError("No se puede subir personas en un vehículo inhabilitado.")
-        if n < 1 or self._ocupantes_actuales + n > self._asientos_totales:
-            raise ValueError("Cantidad inválida o excede capacidad.")
-        antes = self._ocupantes_actuales
-        self._ocupantes_actuales += n
-        self._registrar_ocupacion("subida", n, antes, self._ocupantes_actuales)
-
-    def bajar_personas(self, n):
-        if self.estado != 'habilitado':
-            raise ValueError("No se puede bajar personas en un vehículo inhabilitado.")
-        if n < 1 or self._ocupantes_actuales - n < 0:
-            raise ValueError("Cantidad inválida o negativa.")
-        antes = self._ocupantes_actuales
-        self._ocupantes_actuales -= n
-        self._registrar_ocupacion("bajada", n, antes, self._ocupantes_actuales)
-
-    def reconfigurar_asientos(self, nuevo_total, motivo):
-        if nuevo_total < 1 or nuevo_total < self._ocupantes_actuales:
-            raise ValueError("Nuevo total inválido o menor que ocupantes actuales.")
-        anterior = self._asientos_totales
-        self._asientos_totales = nuevo_total
-        self._registrar_evento("asientos_totales", anterior, nuevo_total, motivo)
+    def bajar_personas(self, cantidad):
+        if cantidad <= 0 or cantidad > self._ocupantes:
+            raise ValueError("Cantidad inválida o mayor a ocupantes actuales.")
+        antes = self._ocupantes
+        self._ocupantes -= cantidad
+        self._registrar_ocupacion("bajada", cantidad, antes, self._ocupantes)
+        self._registrar_evento("ocupantes", antes, self._ocupantes, f"bajada de {cantidad}")
 
     def vaciar_auto(self, motivo):
-        antes = self._ocupantes_actuales
-        self._ocupantes_actuales = 0
+        antes = self._ocupantes
         self._registrar_ocupacion("vaciado", antes, antes, 0)
-        self._registrar_evento("ocupantes_actuales", antes, 0, motivo)
+        self._registrar_evento("ocupantes", antes, 0, f"vaciado de {antes}")
+        self._registrar_evento("ocupantes", antes, 0, motivo)
+        self._ocupantes = 0
 
-    def consultar_ocupacion(self):
-        libres = self._asientos_totales - self._ocupantes_actuales
-        tasa = round((self._ocupantes_actuales / self._asientos_totales) * 100, 2)
-        return {
-            "ocupantes": self._ocupantes_actuales,
-            "libres": libres,
-            "tasa_ocupacion": f"{tasa}%"
-        }
+    def reconfigurar_asientos(self, nueva_cantidad, motivo):
+        if nueva_cantidad < self._ocupantes:
+            raise ValueError("No se puede reducir por debajo de ocupantes actuales.")
+        anterior = self._cantidad_asientos
+        self._cantidad_asientos = nueva_cantidad
+        self._registrar_evento("asientos", anterior, nueva_cantidad, motivo)
 
     def _registrar_ocupacion(self, accion, cantidad, antes, despues):
-        self._eventos_ocupacion.append({
+        evento = {
             "fecha": datetime.now(),
             "accion": accion,
             "cantidad": cantidad,
             "antes": antes,
             "despues": despues
-        })
+        }
+        self.eventos_ocupacion.append(evento)
+
         
-    def _registrar_evento(self, atributo, antes, despues, motivo):
-        self._eventos_ocupacion.append({
-            "fecha": datetime.now(),
-            "atributo": atributo,
-            "antes": antes,
-            "despues": despues,
-            "motivo": motivo
-        })
+
+
+        
         

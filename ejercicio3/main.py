@@ -1,5 +1,5 @@
-from ejercicio3.clases.actividad import Actividad
-from ejercicio3.clases.carrera import Carrera
+from clases.actividad import Actividad
+from clases.carrera import Carrera
 
 def mostrar_historial_eventos(eventos):
     print("\n🕓 Historial de eventos:")
@@ -50,8 +50,8 @@ if __name__ == "__main__":
 
     try:
         carrera.distancia_km = 42  # acceso directo prohibido
-    except AttributeError as e:
-        print("❌ No se puede modificar distancia directamente:", e)
+    except Exception:
+        print("❌ No se puede modificar distancia directamente")
 
     mostrar_eventos_registro(carrera.eventos_registro)
     mostrar_historial_eventos(carrera.historial_eventos)

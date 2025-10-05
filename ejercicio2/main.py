@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
     try:
         libro.paginas_leidas = 999  # acceso directo prohibido
-    except AttributeError:
+    except Exception:
         print("❌ No se puede modificar páginas directamente")
 
     mostrar_eventos_lectura(libro.eventos_lectura)

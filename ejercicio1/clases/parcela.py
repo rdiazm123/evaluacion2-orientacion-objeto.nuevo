@@ -4,11 +4,11 @@ class Parcela:
     def __init__(self, id_parcela, superficie_ha, cultivo_actual):
         self.id_parcela = id_parcela
         self._superficie_ha = None
-        self.superficie_ha = superficie_ha
         self._cultivo_actual = None
-        self.cultivo_actual = cultivo_actual
         self.estado = 'activa'
         self._historial_eventos = []
+        self.superficie_ha = superficie_ha
+        self.cultivo_actual = cultivo_actual
 
     @property
     def superficie_ha(self):
@@ -16,10 +16,9 @@ class Parcela:
 
     @superficie_ha.setter
     def superficie_ha(self, value):
-        if value > 0:
-            self._superficie_ha = round(value, 2)
-        else:
+        if value <= 0:
             raise ValueError("La superficie debe ser mayor que 0.")
+        self._superficie_ha = round(value, 2)
 
     @property
     def cultivo_actual(self):
@@ -27,14 +26,13 @@ class Parcela:
 
     @cultivo_actual.setter
     def cultivo_actual(self, value):
-        if value:
-            self._cultivo_actual = value
-        else:
+        if not value:
             raise ValueError("El cultivo no puede estar vacío.")
+        self._cultivo_actual = value
 
     def actualizar_cultivo(self, nuevo_cultivo):
-        if self.estado == 'inactiva':
-            raise Exception("No se puede actualizar el cultivo en una parcela inactiva.")
+        if self.estado != 'activa':
+            raise ValueError("No se puede actualizar el cultivo en una parcela inactiva.")
         self.cultivo_actual = nuevo_cultivo
         self._registrar_evento("Cultivo actualizado", f"A {nuevo_cultivo}")
 
@@ -47,8 +45,6 @@ class Parcela:
         self._registrar_evento("Desactivación", motivo)
 
     def rectificar_superficie(self, nueva_superficie, motivo):
-        if nueva_superficie <= 0:
-            raise ValueError("La nueva superficie debe ser mayor que 0.")
         anterior = self.superficie_ha
         self.superficie_ha = nueva_superficie
         self._registrar_evento("Rectificación", f"{anterior} → {nueva_superficie}. Motivo: {motivo}")

@@ -1,5 +1,5 @@
-from ejercicio5.clases.planeta import Planeta
-from ejercicio5.clases.cuerpo_celeste import CuerpoCeleste
+from clases.planeta import Planeta
+from clases.cuerpo_celeste import CuerpoCeleste
 
 def mostrar_historial_eventos(eventos):
     print("\n🕓 Historial de eventos:")
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     try:
         tierra.radio_km = 7000  # acceso directo prohibido
     except AttributeError as e:
-        print("❌ No se puede modificar radio directamente:", e)
+        print("❌ No se puede modificar el radio directamente")
 
     mostrar_historial_eventos(tierra.historial_eventos)
 
