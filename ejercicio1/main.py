@@ -1,24 +1,5 @@
-# from ejercicio1.clases.parcela_con_riego import ParcelaConRiego
-
-# if __name__ == "__main__":
-#     parcela = ParcelaConRiego(1, 10.50, "Trigo")
-#     parcela.actualizar_cultivo("Maíz")
-#     parcela.configurar_tasa(1500)
-#     parcela.configurar_umbral(2000)
-#     parcela.cargar_agua(20000)
-#     parcela.regar_automatico("estricto")
-#     parcela.desactivar("Mantenimiento")
-#     try:
-#         parcela.regar_automatico("estricto")
-#     except Exception as e:
-#         print("Error:", e)
-#     parcela.cargar_agua(3000)
-#     parcela.regar_automatico("parcial")
-#     for evento in parcela.eventos_riego:
-#         print(evento)
-        
-    
-from ejercicio1.clases.parcela_con_riego import ParcelaConRiego
+   
+from clases.parcela_con_riego import ParcelaConRiego
 
 def mostrar_historial_eventos(eventos):
     print("\n🕓 Historial de eventos:")
@@ -61,8 +42,8 @@ if __name__ == "__main__":
 
     try:
         parcela.litros_disponibles = 99999  # acceso directo prohibido
-    except AttributeError as e:
-        print("❌ No se puede modificar litros directamente:", e)
+    except Exception:
+        print("❌ No se puede modificar litros directamente")
 
     mostrar_eventos_riego(parcela.eventos_riego)
     mostrar_historial_eventos(parcela.historial_eventos)
