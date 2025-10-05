@@ -1,5 +1,5 @@
-from ejercicio2.clases.libro import Libro
-from ejercicio2.clases.publicacion import Publicacion
+from clases.libro import Libro
+from clases.publicacion import Publicacion
 
 def mostrar_historial_eventos(eventos):
     print("\n🕓 Historial de eventos:")
@@ -50,8 +50,8 @@ if __name__ == "__main__":
 
     try:
         libro.paginas_leidas = 999  # acceso directo prohibido
-    except AttributeError as e:
-        print("❌ No se puede modificar páginas directamente:", e)
+    except AttributeError:
+        print("❌ No se puede modificar páginas directamente")
 
     mostrar_eventos_lectura(libro.eventos_lectura)
     mostrar_historial_eventos(libro.historial_eventos)
