@@ -139,21 +139,7 @@ if __name__ == "__main__":
     except Exception as e:
         print("❌ Error en Ejercicio 4:", e)
 
-    # 🟩 Ejercicio 5 — Catálogo de planetas
-    separador("Ejercicio 5 — Catálogo de planetas")
-    try:
-        tierra = Planeta(5, "Tierra", 5.97e24, 6371, 149_600_000)
-        marte = Planeta(6, "Marte", 6.42e23, 3389, 227_900_000)
-        print("🌍 Densidad Tierra:", tierra.calcular_densidad(), "kg/km³")
-        print("🔴 Comparación:", tierra.comparar_distancia(marte))
-        tierra.actualizar_masa(6e24, "revisión científica")
-        try:
-            tierra.radio_km = 7000
-        except AttributeError as e:
-            print("✅ Acceso prohibido:", e)
-        mostrar_eventos(tierra.historial_eventos, "historial")
-    except Exception as e:
-        print("❌ Error en Ejercicio 5:", e)
+#repeti el ejercicio 4 para verificar consistencia  (no me gusta repetir codigo pero es para asegurar que no hay efectos colaterales)
 
 
         auto.subir_personas(3)
