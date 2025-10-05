@@ -1,3 +1,4 @@
+
 from clases.libro import Libro
 from clases.publicacion import Publicacion
 
@@ -23,14 +24,14 @@ if __name__ == "__main__":
 
     try:
         pub2 = Publicacion(2, "Libro inválido", 1400)
-    except ValueError as e:
-        print("❌ Año inválido:", e)
+    except Exception:
+        print("❌ Año inválido:")
 
     try:
         libro = Libro(3, "Cien años de soledad", 1967, 500)
         print("✅ Libro creado:", libro.titulo, libro.anio, "páginas:", libro.paginas_totales)
-    except ValueError as e:
-        print("❌ Error al crear libro:", e)
+    except Exception:
+        print("❌ Error al crear libro:")
 
     try:
         libro.leer(120)
@@ -40,13 +41,13 @@ if __name__ == "__main__":
 
     try:
         libro.leer(400)
-    except ValueError as e:
-        print("❌ Error al leer demasiadas páginas:", e)
+    except Exception:
+        print("❌ Error al leer demasiadas páginas")
 
     try:
         libro.actualizar_anio(1967)
-    except ValueError as e:
-        print("❌ Error al actualizar año:", e)
+    except Exception:
+        print("❌ Error al actualizar año")
 
     try:
         libro.paginas_leidas = 999  # acceso directo prohibido
@@ -54,7 +55,51 @@ if __name__ == "__main__":
         print("❌ No se puede modificar páginas directamente")
 
     mostrar_eventos_lectura(libro.eventos_lectura)
+#mo
     mostrar_historial_eventos(libro.historial_eventos)
+#mostrar_historial_eventos(pub1.historial_eventos)
+    try:
+        pub1.actualizar_titulo("El ingenioso hidalgo Don Quijote de la Mancha")
+        print("✅ Título actualizado:", pub1.titulo)
+    except ValueError as e:
+        print("❌ Error al actualizar título:", e)
+
+    try:
+        pub1.actualizar_anio(1615)
+        print("✅ Año actualizado:", pub1.anio)
+    except ValueError as e:
+        print("❌ Error al actualizar año:", e)
+
+    mostrar_historial_eventos(pub1.historial_eventos)   
+    try:
+        pub1.actualizar_anio(1400)
+    except Exception:
+        print("❌ Error al actualizar a un año inválido")
+    mostrar_historial_eventos(pub1.historial_eventos)
+    try:
+        pub1.actualizar_titulo("")
+    except Exception:
+        print("❌ Error al actualizar a un título vacío")
+    mostrar_historial_eventos(pub1.historial_eventos)
+    try:
+        pub1.anio = 1400
+    except Exception:
+        print("❌ Error al asignar un año inválido directamente")
+    mostrar_historial_eventos(pub1.historial_eventos)
+    try:
+        pub1.titulo = ""
+    except Exception:
+        print("❌ Error al asignar un título vacío directamente")
+    mostrar_historial_eventos(pub1.historial_eventos)
+    mostrar_eventos_lectura(libro.eventos_lectura)
+    mostrar_historial_eventos(libro.historial_eventos)
+    try:
+        libro.leer(-10)
+    except Exception:
+        print("❌ Error al leer un número negativo de páginas")
+    mostrar_eventos_lectura(libro.eventos_lectura)
+    mostrar_historial_eventos(libro.historial_eventos)
+    
     
 
         

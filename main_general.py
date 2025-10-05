@@ -1,43 +1,4 @@
-# import os
-# import sys
-
-# def ejecutar_ejercicio(modulo, nombre):
-#     print(f"\n{'='*50}")
-#     print(f"{name_icon(nombre)}  {nombre}")
-#     print('-'*50)
-#     comando = f'set PYTHONPATH={os.getcwd()}&& {sys.executable} -m {modulo}'
-#     resultado = os.system(comando)
-#     if resultado == 0:
-#         print(f"\n✅ {nombre} ejecutado correctamente.")
-#     else:
-#         print(f"\n❌ {nombre} terminó con errores.")
-#     print(f"{'='*50}")
-
-# def name_icon(nombre):
-#     iconos = {
-#         "Ejercicio 1": "🧪",
-#         "Ejercicio 2": "📚",
-#         "Ejercicio 3": "🏃",
-#         "Ejercicio 4": "🚗",
-#         "Ejercicio 5": "🪐"
-#     }
-#     return iconos.get(nombre, "")
-
-# if __name__ == "__main__":
-#     print("\n✨ VALIDACIÓN GENERAL DE TODOS LOS EJERCICIOS ✨")
-#     print("="*50)
-#     ejercicios = [
-#         ("ejercicio1.main", "Ejercicio 1"),
-#         ("ejercicio2.main", "Ejercicio 2"),
-#         ("ejercicio3.main", "Ejercicio 3"),
-#         ("ejercicio4.main", "Ejercicio 4"),
-#         ("ejercicio5.main", "Ejercicio 5"),
-#     ]
-#     for modulo, nombre in ejercicios:
-#         ejecutar_ejercicio(modulo, nombre)
-#     print("\n🎉 Validación completa. Revisa los resultados arriba.")
-#     print("="*50)
-
+# main_general.py
 import time
 from ejercicio1.clases.parcela_con_riego import ParcelaConRiego
 from ejercicio2.clases.libro import Libro

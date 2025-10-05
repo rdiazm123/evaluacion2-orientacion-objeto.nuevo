@@ -36,3 +36,4 @@ class Libro(Publicacion):
 
     def consultar_progreso(self):
         return round((self._paginas_leidas / self._paginas_totales) * 100, 2)
+
